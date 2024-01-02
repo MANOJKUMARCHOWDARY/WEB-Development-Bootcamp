@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Types</title>
+</head>
+
+<body>
+
+
+    <script>
+
+        /* symbol - Symbols are a new primitive data type introduced in ES6. They are unique and immutable values, often used as 
+                    unique identifiers. Symbol is a distinct data type used helping prevent naming collisions in object properties.*/
+
+        // using var to assign values :
+        var x = 10; // x is a variable holding a number (integer)
+        var y = 'Hello'; // y is a variable holding a string
+        var z = true; // z is a variable holding a boolean value
+
+        // Variables declared with var can hold any data type
+        x = 'JavaScript'; // Now x holds a string value
+
+
+        // Using Symbol for Unique Identifiers:
+        // Creating a Symbol
+        const mySymbol = Symbol('description');
+
+        // Symbols are unique and immutable
+        const anotherSymbol = Symbol('description'); // This creates a different, unique symbol
+
+        console.log(mySymbol === anotherSymbol); // Output: false (Symbols are unique)
+
+
+        
+
+
+    </script>
+</body>
+
+</html>

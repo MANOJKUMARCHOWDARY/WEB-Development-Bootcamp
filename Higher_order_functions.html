@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Higher Order Functions</title>
+</head>
+
+<body>
+    <!-- 
+        Higher Order Functions :
+            Higher-order functions are an essential concept in JavaScript, where functions can be treated as values, passed as arguments to other functions, or returned from functions. 
+
+        A higher-order function is a function that meets at least one of the following criteria:
+            - Takes a function as an argument: It accepts a function as an argument, allowing behavior to be abstracted and     
+              parameterized.
+            - Returns a function: It generates or creates a new function as its output, enabling the creation of functions    
+              dynamically.
+     -->
+
+    <script>
+
+        // Basic Example - Function as an Argument:
+        function multiplier(factor) {
+            return function (number) {
+                return number * factor;
+            };
+        }
+
+        const double = multiplier(2); // Returns a function that doubles the value
+        const triple = multiplier(3); // Returns a function that triples the value
+
+        console.log(double(5)); // Output: 10
+        console.log(triple(5)); // Output: 15
+
+        /*
+        Note : Here multiplier is a higher-order function as it returns a new function based on the provided factor. It generates 
+               specialized functions (double and triple) that can multiply a number by 2 or 3, respectively.
+        */
+
+
+        // Function Returning a Function:
+        function greeter(greeting) {
+            return function (name) {
+                console.log(`${greeting}, ${name}!`);
+            };
+        }
+
+        const greetInEnglish = greeter('Hello');
+        const greetInSpanish = greeter('Hola');
+
+        greetInEnglish('Alice'); // Output: Hello, Alice!
+        greetInSpanish('Bob'); // Output: Hola, Bob!
+
+        // - Closure: With the help of closure functionality When greeter('Hello') or greeter('Hola') is called, it creates a     
+        //               closure by preserving the greeting variable's value within the returned function's scope.
+
+
+        //REal time example 
+        // Higher-order function that filters an array based on a condition
+        function filterArray(arr, condition) {
+            return arr.filter(condition);
+        }
+
+        // Example usage:
+        const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+        // Filtering even numbers using the higher-order function
+        const evenNumbers = filterArray(numbers, num => num % 2 === 0);
+        console.log('Even numbers:', evenNumbers);
+
+        // Filtering numbers greater than 5 using the higher-order function
+        const greaterThanFive = filterArray(numbers, num => num > 5);
+        console.log('Numbers greater than 5:', greaterThanFive);
+
+
+        /*  Note : Here
+           
+
+            -Higher-order functions enable several advantages in JavaScript:
+
+                Abstraction and Reusability: They allow us to abstract behavior into functions that can be reused across different contexts.
+                Functional Composition: Functions can be combined to create more complex functionalities, enabling a cleaner and modular code structure.
+                Encapsulation and Closure: They enable the creation of closures, where functions retain access to variables from their containing scope even after the parent function has finished executing.
+                Flexibility and Dynamism: They provide flexibility in generating functions dynamically based on conditions or parameters.
+                Understanding and effectively using higher-order functions can lead to more elegant and concise code, facilitating better code organization and improved readability in JavaScript.
+        */
+
+    </script>
+
+</body>
+
+</html>

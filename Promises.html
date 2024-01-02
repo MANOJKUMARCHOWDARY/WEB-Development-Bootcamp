@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>`
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promises</title>
+</head>
+
+<body>
+    <div id="posts"></div>
+    
+    <!-- 
+        Async / Await : async and await are used to work with asynchronous code in a more synchronous and readable manner.
+     -->
+    <!-- 
+        Promises : Promises are a fundamental concept in JavaScript used for handling asynchronous operations. They represent a 
+                   value that may not be available yet but will be resolved in the future, either with a value or with an error. Promises provide a cleaner way to write asynchronous code compared to callbacks.
+
+                   States : 
+                        1) Resolved
+                        2) Rejected
+                        3) Pending
+            
+                - With API
+                - Promises Chaining
+                - Error Handling with Promises
+     -->
+
+
+    <script>
+        //Aync Await Example
+
+        // Simulated asynchronous function that resolves after a delay
+        function fetchData() {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve('Data fetched!');
+                }, 2000);
+            });
+        }
+
+        // Using async/await to handle asynchronous code
+        async function getData() {
+            console.log('Fetching data...');
+
+            try {
+                const result = await fetchData(); // Pauses execution until fetchData() promise is resolved
+                console.log(result); // Logs 'Data fetched!' after fetchData() promise resolves
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        getData(); // Invoke the async function
+
+        console.log('After getData() call'); // This line logs before the fetched data due to async nature
+
+
+
+        // Creating a promise
+        const fetchData = new Promise((resolve, reject) => {
+            // Simulate an asynchronous operation (e.g., fetching data from an API)
+            setTimeout(() => {
+                const data = { id: 1, name: 'Sample Data' };
+                const success = true;
+
+                if (success) {
+                    resolve(data); // Operation succeeded, resolve with data
+                } else {
+                    reject('Error: Unable to fetch data'); // Operation failed, reject with an error
+                }
+            }, 1000); // Simulating a 1-second delay
+        });
+
+
+        // using promise
+        fetchData
+            .then((data) => {
+                // Handle the resolved data
+                console.log('Fetched Data:', data);
+            })
+            .catch((error) => {
+                // Handle any errors that occurred during the operation
+                console.error('Error:', error);
+            });
+
+
+        // async / Await with promise
+        async function fetchAndDisplayData() {
+            try {
+                const data = await fetchData; // Wait for the Promise to resolve
+                console.log('Fetched Data:', data);
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        fetchAndDisplayData();
+
+
+        // Promises with API
+        fetch('https://jsonplaceholder.typicode.com/posts')
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok.');
+                }
+                return response.json();
+            })
+            .then((data) => {
+                console.log('Fetched Data:', data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+
+
+        // Promises Chaining
+        const fetchFirstData = fetch('https://dummyjson.com/comments');
+        const fetchSecondData = fetch('https://dummyjson.com/posts');
+
+        Promise.all([fetchFirstData, fetchSecondData])
+            .then(async (responses) => {
+                const response1 = await responses[0].json()
+                console.log(response1); // by passing ?limit = limitvalue the records showing per call can be adjusted
+
+                // Process responses from both API calls
+                // responses[0] will contain data from the first API call
+                // responses[1] will contain data from the second API call
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+
+
+        // Errorhandling with Promises
+        fetchData
+            .then((data) => {
+                console.log('Fetched Data:', data);
+                throw new Error('Custom Error');
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+
+
+
+/*-----------------------------------------------------------------------------*/
+
+        // Realtime example to expalin promises with all these
+
+        // <div id="posts"></div>
+
+        // Function to fetch posts from the API using Promises
+        function fetchPosts() {
+            return new Promise((resolve, reject) => {
+                fetch('https://jsonplaceholder.typicode.com/posts')
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok.');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        resolve(data); // Resolve with fetched data
+                    })
+                    .catch(error => {
+                        reject(error); // Reject with error if any
+                    });
+            });
+        }
+
+        // Display posts on the webpage
+        function displayPosts(posts) {
+            const postsElement = document.getElementById('posts');
+            let postsHTML = '<h2>Posts</h2><ul>';
+
+            posts.forEach(post => {
+                postsHTML += `<li><strong>${post.title}</strong>: ${post.body}</li>`;
+            });
+
+            postsHTML += '</ul>';
+            postsElement.innerHTML = postsHTML;
+        }
+
+        // Fetch and display posts on button click
+        document.addEventListener('DOMContentLoaded', () => {
+            const displayButton = document.createElement('button');
+            displayButton.textContent = 'Display Posts';
+            displayButton.addEventListener('click', () => {
+                fetchPosts()
+                    .then(posts => {
+                        displayPosts(posts);
+                    })
+                    .catch(error => {
+                        console.error('Error fetching posts:', error);
+                    });
+            });
+
+            document.body.appendChild(displayButton);
+        });
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operators</title>
+</head>
+
+<body>
+    <!--  
+         Spread Operator : The spread operator (...) allows an iterable (like an array or string) to be expanded into individual   
+                           elements. It is useful for function calls, array literals, and more.
+
+         Rest Params : Rest parameters allow us to represent an indefinite number of arguments as an array within a function. They 
+                       are indicated by three dots (...) followed by the parameter name and gather the remaining arguments passed to a function.
+     -->
+    <script>
+
+        // Spread Operator Baisc example
+        const arrvalue = ['My', 'name', 'is', 'Manoj', 'Chowdhary'];
+        console.log(arrvalue);
+        console.log(...arrvalue);
+
+        // Copy array using Spread Operator
+        const arr1 = ['one', 'Two'];
+        const arr2 = [...arr1, 'three', 'four'];
+        console.log(arr2);
+
+        // clone array using spread operator
+        let arr3 = [1, 2, 3];
+        let arr4 = arr3;
+        console.log(arr4); //  [1, 2, 3]
+        arr3.push(4);
+        console.log(arr3); //[1, 2, 3, 4]
+        console.log(arr4); //[1, 2, 3, 4]
+
+        /* 
+        - Here arr3 , arr4 are refering to teh same array. Hence change in one variable results change in both variables.
+        
+        - If you want to copy arrays so that they do not refer to the same array you can use spread operator so that change in one array not reflect in teh other.
+        
+        */
+
+        // Example :
+        let arr5 = [1, 2, 3];
+        let arr6 = [...arr5];
+        console.log(arr5);
+        console.log(arr6);
+        arr5.push(4);
+        console.log(arr5);
+        console.log(arr6);
+
+        // Spread Operator with Object
+        let obj1 = { a: 1, b: 2 };
+        let obj2 = { c: 3 };
+        let obj3 = { ...obj1, ...obj2 };
+        console.log(obj3);
+
+        // Use in Math Function
+        const numbers = [23, -17, 35, 9, 0];
+        console.log(Math.min(numbers));
+        console.log(Math.min(...numbers));
+
+        // With function calls
+        function addThreeNumbers(a, b, c) {
+            return a + b + c;
+        }
+        const nums = [1, 2, 3];
+        const sum = addThreeNumbers(...nums); // Spreading array into function arguments
+        console.log(sum); // Output: 6
+
+        /*----------------------------------------------------------------------------------------*/
+
+        // Rest Params Example
+        // It stores n number of parameters as an array
+        function fun(a, b) {
+            return a + b;
+        }
+        console.log(fun(1, 2)); //3
+        console.log(fun(1, 2, 3, 4)); //3
+
+        // With res params
+        function add(...numbers) {
+            let result = 0;
+            for (let num of numbers) {
+                result += num;
+            }
+            return result;
+        }
+
+        console.log(add(1, 2)); // Outputs: 3
+        console.log(add(1, 2, 3)); // Outputs: 6
+        console.log(add(1, 2, 3, 4)); // Outputs: 10
+
+        // rest Params With object
+        function showname(fName, lName, ...titles) {
+            console.log(fName + ' ' + lName);
+            console.log(titles[0]);
+            console.log(titles[1]);
+            console.log(titles.length);
+        }
+        showname("Manoj", "Krishna", "Pranathi", "Teju");
+        /* NOTE : Rest params always should be at the end. The rest params gathers all teh remaining arguments. So teh following doesn't make sense and causes an error
+        Example :
+         fucntion f(arg1 , ...arg , arg2){
+            //Error
+         }
+        */
+
+        // Destructuring using rest params
+        var colors = ['green' , 'yellow','red','blue','orange'];
+        var[a,b ,...args] = colors;
+        console.log(a);
+        console.log(b);
+        console.log(args);
+
+
+
+    </script>
+</body>
+
+</html>
